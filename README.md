@@ -9,14 +9,6 @@ La partie se joue au clavier. Les bonus augmentent la zone visible, tandis que l
 
 Le projet repose uniquement sur la bibliothèque standard de Python. Le rendu s'appuie sur les caractères Unicode de dessin de cadres, sans interface graphique ni dépendance externe.
 
-> **Projet :** Projet d'année n°2
->
-> **Auteur :** Jawad Cherkaoui
->
-> **Date :** 2 avril 2023
->
-> **Matricule :** 576517
-
 ---
 
 <a id="demonstrations-video"></a>
