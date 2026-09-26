@@ -14,7 +14,8 @@ Les dimensions, la génération et les règles sont configurables en ligne de co
 
 ## 📸 Captures d’écran
 
-![Exploration d’un donjon dans le terminal](https://github.com/user-attachments/assets/ff96020e-72fd-486b-8f45-26c17fc71122)
+![Exploration d’un donjon dans le terminal](https://github.com/user-attachments/assets/ae1b5fdd-f0a6-43c3-9cee-67e89bfa7510)
+
 
 <a id="demonstrations-video"></a>
 
