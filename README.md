@@ -8,7 +8,7 @@ Dungeon Crawler est un **jeu d’exploration de donjons en terminal**, écrit en
 Les dimensions, la génération et les règles sont configurables en ligne de commande. Un mode difficile transforme le donjon en labyrinthe et une graine permet de reproduire une partie. Le jeu utilise uniquement la bibliothèque standard de Python.
 
 > Projet académique ULB — INFO-F106.
-> Projet d’informatique · Projet 2 · 2022–2023
+> Projet d’informatique 2 · 2022–2023
 
 <a id="captures-decran"></a>
 
