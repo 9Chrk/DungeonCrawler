@@ -1,13 +1,22 @@
 # Dungeon Crawler
 
-![Python](https://img.shields.io/badge/Python-3-blue)
-![Interface](https://img.shields.io/badge/Interface-terminal-green)
+![Python](https://img.shields.io/badge/Python-3-blue?style=flat-square)
+![Interface](https://img.shields.io/badge/Interface-terminal-green?style=flat-square)
 
-Dungeon Crawler est un jeu d'exploration en terminal écrit en Python. À chaque partie, il construit un donjon aléatoire composé de salles et de couloirs : le joueur doit atteindre la sortie avant que la portée de sa torche ne tombe à zéro.
+Dungeon Crawler est un **jeu d’exploration de donjons en terminal**, écrit en **Python**. Trouvez la sortie d’un donjon généré aléatoirement avant que votre torche ne s’éteigne, en collectant des bonus de visibilité et en évitant les fantômes.
 
-La partie se joue au clavier. Les bonus augmentent la zone visible, tandis que les fantômes facultatifs peuvent provoquer une défaite ; le mode difficile transforme quant à lui le donjon en labyrinthe. Les dimensions, la génération et les règles sont réglables depuis la ligne de commande, et une graine permet de reproduire une partie.
+Les dimensions, la génération et les règles sont configurables en ligne de commande. Un mode difficile transforme le donjon en labyrinthe et une graine permet de reproduire une partie. Le jeu utilise uniquement la bibliothèque standard de Python.
 
-Le projet repose uniquement sur la bibliothèque standard de Python. Le rendu s'appuie sur les caractères Unicode de dessin de cadres, sans interface graphique ni dépendance externe.
+> Projet académique ULB — INFO-F106.
+> Projet d’informatique · Projet 2 · 2022–2023
+
+---
+
+<a id="captures-decran"></a>
+
+## 📸 Captures d’écran
+
+![Exploration d’un donjon dans le terminal](https://github.com/user-attachments/assets/ff96020e-72fd-486b-8f45-26c17fc71122)
 
 ---
 
@@ -23,8 +32,6 @@ Les démonstrations fournies montrent les issues et le comportement liés aux fa
 
 ---
 
-<a id="sommaire"></a>
-
 ## 📖 Sommaire
 
 - [Fonctionnalités](#fonctionnalites)
@@ -35,10 +42,10 @@ Les démonstrations fournies montrent les issues et le comportement liés aux fa
 - [Utilisation](#utilisation)
 - [Architecture](#architecture)
 - [Flux général](#flux-general)
-- [Tests](#tests)
 - [Structure du projet](#structure-du-projet)
-- [Documentation](#documentation)
+- [Tests](#tests)
 - [Problèmes fréquents](#problemes-frequents)
+- [Documentation](#documentation)
 - [Licence](#licence)
 
 ---
@@ -54,6 +61,8 @@ Les démonstrations fournies montrent les issues et le comportement liés aux fa
 - **Fantômes optionnels** : les fantômes `G` se déplacent à intervalles configurables ; avec `--ghosts-walls`, ils choisissent uniquement des cases accessibles sans traverser les murs.
 - **Parties reproductibles** : `--seed` initialise le générateur aléatoire afin de retrouver la même génération et le même placement initial.
 
+---
+
 <a id="prerequis"></a>
 
 ## 🧰 Prérequis
@@ -62,6 +71,8 @@ Les démonstrations fournies montrent les issues et le comportement liés aux fa
 - Un terminal compatible avec l'encodage UTF-8 et les caractères de dessin de cadres.
 
 Les modules importés par le projet sont `argparse`, `os` et `random`, qui font partie de la bibliothèque standard de Python. Aucune dépendance externe n'est à installer.
+
+---
 
 <a id="configuration"></a>
 
@@ -85,6 +96,8 @@ Le projet ne contient pas de fichier de configuration : les réglages sont pass�
 | `--ghosts-delay` | Nombre de déplacements du joueur entre deux déplacements des fantômes | `2` |
 | `--ghosts-walls` | Empêche les fantômes de traverser les murs | désactivé |
 
+---
+
 <a id="installation"></a>
 
 ## 📦 Installation
@@ -93,6 +106,8 @@ Le projet ne contient pas de fichier de configuration : les réglages sont pass�
 git clone https://github.com/9Chrk/DungeonCrawler.git
 cd DungeonCrawler
 ```
+
+---
 
 <a id="lancement"></a>
 
@@ -110,6 +125,8 @@ L'exemple suivant fixe une graine, ajoute des bonus et active deux fantômes :
 python3 main.py 40 20 --rooms 5 --bonuses 3 --ghosts 2 --seed 42
 ```
 
+---
+
 <a id="utilisation"></a>
 
 ## 🎮 Utilisation
@@ -125,6 +142,8 @@ python3 main.py 40 20 --rooms 5 --bonuses 3 --ghosts 2 --seed 42
 
 Le joueur est affiché par `X`. Il gagne en rejoignant `#`, perd s'il rencontre un fantôme `G` ou lorsque sa portée de visibilité atteint zéro. Les bonus `@` prolongent cette portée.
 
+---
+
 <a id="architecture"></a>
 
 ## 🧱 Architecture
@@ -136,6 +155,8 @@ Le point d'entrée `main.py` analyse les arguments, construit un `DungeonGenerat
 `grid.py` porte l'état structurel du donjon. Chaque `Node` conserve les quatre passages (`up`, `down`, `left`, `right`) ainsi que les marqueurs de jeu. `Grid` garantit que les modifications de murs sont appliquées des deux côtés d'une case, fournit les voisins accessibles et isole les salles. Les valeurs de position sont encapsulées dans `Pos2D` (`pos2d.py`) ; `Box` (`box.py`) calcule les bornes et les bords des salles.
 
 `player.py` gère l'état dynamique : position, compteurs de torche, portée, bonus et fantômes. Après un déplacement autorisé, il applique les effets de la case puis, au rythme configuré, déplace les fantômes. `renderer.py` transforme finalement les murs et les marqueurs de `Grid` en caractères de terminal ; `Renderer` restreint l'affichage aux positions situées dans le rayon euclidien autour du joueur.
+
+---
 
 <a id="flux-general"></a>
 
@@ -158,11 +179,7 @@ Renderer ──► rendu UTF-8 limité au champ de vision
     └──► victoire ou défaite
 ```
 
-<a id="tests"></a>
-
-## 🧪 Tests
-
-`test.py` contient des tests de style `pytest` pour les positions, les murs, les voisins accessibles, le rendu textuel et le générateur. Ils vérifient notamment la symétrie des passages, la connexion du donjon généré et le fait qu'un donjon sans salle en mode difficile soit un labyrinthe. `_test.py` contient actuellement le même jeu de tests.
+---
 
 <a id="structure-du-projet"></a>
 
@@ -185,14 +202,15 @@ DungeonCrawler/
 └── LICENSE          # Licence MIT
 ```
 
-<a id="documentation"></a>
+---
 
-## 📄 Documentation
+<a id="tests"></a>
 
-- [Document du projet](projet2.pdf)
-- [Vidéo « win »](Vidéos/win.avi)
-- [Vidéo « loss »](Vidéos/loss.avi)
-- [Vidéo « ghosts »](Vidéos/ghosts.avi)
+## 🧪 Tests
+
+`test.py` contient des tests de style `pytest` pour les positions, les murs, les voisins accessibles, le rendu textuel et le générateur. Ils vérifient notamment la symétrie des passages, la connexion du donjon généré et le fait qu'un donjon sans salle en mode difficile soit un labyrinthe. `_test.py` contient actuellement le même jeu de tests.
+
+---
 
 <a id="problemes-frequents"></a>
 
@@ -209,6 +227,19 @@ Les dimensions doivent être cohérentes avec les tailles minimales et maximales
 ### Les imports locaux ne sont pas trouvés
 
 Lancez la commande depuis la racine du dépôt, où se trouvent `main.py`, `generation.py`, `grid.py` et les autres modules importés.
+
+---
+
+<a id="documentation"></a>
+
+## 📄 Documentation
+
+- [Document du projet](projet2.pdf)
+- [Vidéo « win »](Vidéos/win.avi)
+- [Vidéo « loss »](Vidéos/loss.avi)
+- [Vidéo « ghosts »](Vidéos/ghosts.avi)
+
+---
 
 <a id="licence"></a>
 
